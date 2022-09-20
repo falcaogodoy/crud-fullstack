@@ -38,6 +38,7 @@ router.post("/register", async(req, res) =>{
         if (existingEmail) {
             return res.status(400).json({error: ' Email ja registrado'})
         }
+
         //hash the password
         const hashedPassword = await bcrypt.hash(req.body.password, 12);
        //criar usuario
@@ -49,13 +50,41 @@ router.post("/register", async(req, res) =>{
         //salvando usuario
 
         const savedUser = await newUser.save();
+        const userToReturn = { ...savedUser._doc };
+        delete userToReturn.password;
 
         // reorno novo user
-        return res.json(savedUser);
+        return res.json(userToReturn);
 
     } catch(err){
         console.log(err);
         res.status(500).send(err.message);
+    }
+});
+
+//@route POST /api/auth/login
+//@desc acesso ao token de usuario e senha
+//@acess Public
+
+router.post("/login", async (req, res) =>{
+    try{
+        //verifica usuario
+        const user = await User.findOne({
+            email: new RegExp("^" + req.body.email + "$", "i"),
+        })
+        if(!user) {
+            return res.status(400).json({error: ' problema no seu login'});
+        }
+
+        const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+        if(!passwordMatch){
+            return res.status(400).json({error: ' problema no seu login'});
+        }
+
+        /* return res.json({passwordMatch: passwordMatch}); */
+    }catch(err) {
+        console.log(err);
+        return res.status(500).send(err.message);
     }
 });
 
