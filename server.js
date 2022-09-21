@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 /// imprort
 
 const authRoute = require("./routes/auth");
+const ToDosRoute = require("./routes/todos");
+
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.get("/api", (req, res) => {
     res.send(" TESte /");
 });
 app.use("/api/auth", authRoute);
+app.use("/api/todos", ToDosRoute);
+
 
 mongoose.connect(process.env.MONGO_URL).then(() =>{
     console.log('Conectando ao DB');
