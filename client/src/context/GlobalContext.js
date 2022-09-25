@@ -43,7 +43,7 @@ const globalReducer = (state, action) => {
         default:
             return state;
     }
-}
+};
 
 
 //create context
@@ -83,15 +83,15 @@ export const GlobalProvider = (props) =>{
     };
 
     const logout = async () => {
-        try{
-            await axios.put("/api/auth/logout");
-
-            dispatch({type: "RESET_USER"});
-        } catch (err){
-            console.log(err);
-            dispatch({type: "RESET_USER"});
+        try {
+          await axios.put("/api/auth/logout");
+    
+          dispatch({ type: "RESET_USER" });
+        } catch (err) {
+          console.log(err);
+          dispatch({ type: "RESET_USER" });
         }
-    };
+      };
 
     const value = {
         ...state,

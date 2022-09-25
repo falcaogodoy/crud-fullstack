@@ -21,7 +21,7 @@ const Header = () => {
                         {user ? (
                         <button className="btn" onClick={logout}>
                         Logout
-                        </button>
+                      </button>
                     ) : pathname === "/" ? (
                         <Link to="/register" className="btn">
                         Register
