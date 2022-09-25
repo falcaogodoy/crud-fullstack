@@ -54,7 +54,7 @@ router.get("/current", requiresAuth, async (req, res) => {
     try {
       const completeToDos = await ToDo.find({
         user: req.user._id,
-        complete: true
+        complete: true,
       }).sort({ completedAt: -1 });
   
       const incompleteToDos = await ToDo.find({
